@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NEXO SMP | Офіційний сайт</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;900&family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root { 
+            --accent: #22d3ee; 
+            --accent-dark: #1e40af; 
+            --bg: #020617; 
+        }
+        body { background-color: var(--bg); color: #fff; font-family: 'Inter', sans-serif; overflow-x: hidden; }
+        .accent-font { font-family: 'Orbitron', sans-serif; }
+        
+        .bg-animate {
+            background: 
+                radial-gradient(circle at 10% 10%, rgba(34, 211, 238, 0.06) 0%, transparent 40%),
+                radial-gradient(circle at 90% 90%, rgba(30, 64, 175, 0.08) 0%, transparent 40%),
+                linear-gradient(180deg, #020617 0%, #010413 100%);
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;
+        }
+
+        .tab-content { display: none; }
+        .tab-content.active { display: block; animation: fadeIn 0.5s ease; }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        .nav-link { cursor: pointer; transition: 0.3s; position: relative; font-size: 10px; font-weight: bold; text-transform: uppercase; letter-spacing: 0.1em; color: #94a3b8; }
+        .nav-link:hover { color: #fff; }
+        .nav-link::after { 
+            content: ''; position: absolute; bottom: -5px; left: 0; width: 0; height: 2px; 
+            background: var(--accent); transition: 0.3s; 
+        }
+        .nav-link:hover::after, .nav-link.active::after { width: 100%; }
+        .nav-link.active { color: #fff; }
+
+        .btn-main { 
+            background: rgba(255, 255, 255, 0.01); 
+            border: 1px solid rgba(255, 255, 255, 0.03); 
+            transition: 0.4s; 
+            border-radius: 4px; 
+            backdrop-filter: blur(5px);
+        }
+        .btn-main:hover { 
+            border-color: var(--accent); 
+            background: rgba(34, 211, 238, 0.02); 
+            transform: translateY(-3px); 
+        }
+        
+        .card-custom { 
+            background: rgba(255, 255, 255, 0.01); 
+            border-left: 3px solid var(--accent-dark); 
+            backdrop-filter: blur(5px);
+        }
+
+        .btn-discord {
+            background-color: #5865F2;
+            transition: 0.3s;
+        }
+        .btn-discord:hover {
+            background-color: #4752c4;
+            transform: scale(1.02);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="bg-animate"></div>
+
+    <nav class="p-6 flex justify-between items-center max-w-7xl mx-auto sticky top-0 bg-slate-950/60 backdrop-blur-lg z-[100] border-b border-white/5">
+        <div class="accent-font font-black text-2xl cursor-pointer tracking-tighter" onclick="showTab('home')">NEXO<span style="color: var(--accent);">_</span>SMP</div>
+        <div class="flex gap-4 md:gap-10">
+            <span class="nav-link active" id="link-home" onclick="showTab('home')">Головна</span>
+            <span class="nav-link" id="link-rules" onclick="showTab('rules')">Правила</span>
+            <span class="nav-link" id="link-donate" onclick="showTab('donate')">Донат</span>
+            <a href="https://discord.gg/9EBazmNJzY" target="_blank" class="nav-link text-cyan-400">Discord</a>
+        </div>
+    </nav><div id="home" class="tab-content active">
+        <main class="h-[75vh] flex flex-col items-center justify-center px-4 text-center">
+            <div class="mb-4 px-4 py-1 border border-cyan-600/20 rounded-full bg-cyan-950/30 text-cyan-400 text-[10px] uppercase tracking-[0.3em] accent-font">Server Online</div>
+            <h1 class="accent-font text-6xl md:text-9xl font-black mb-4 tracking-tighter uppercase italic">
+                NEXO <span style="color: var(--accent); text-shadow: 0 0 20px rgba(34, 211, 238, 0.3);">SMP</span>
+            </h1>
+            <p class="text-slate-400 max-w-lg mb-12 text-sm uppercase tracking-[0.2em] font-light italic">
+                Твоя історія, твої правила, твоє виживання.
+            </p>
+
+            <div class="flex flex-col sm:flex-row gap-6 w-full max-w-2xl">
+                <div onclick="copyIP()" class="cursor-pointer flex-1 p-5 btn-main flex flex-col items-center group border-white/5">
+                    <span class="text-[9px] text-slate-500 uppercase mb-1 tracking-widest group-hover:text-cyan-300">Натисни щоб копіювати IP</span>
+                    <span id="ip-text" class="accent-font text-xl font-bold tracking-wider uppercase text-white group-hover:text-cyan-400 transition">nexosmp.myftp.org</span>
+                </div>
+                <a href="https://discord.gg/9EBazmNJzY" target="_blank" class="flex-1 p-5 btn-discord rounded transition flex items-center justify-center accent-font text-xl uppercase font-black italic shadow-lg shadow-blue-600/10 text-white">
+                    Приєднатися
+                </a>
+            </div>
+        </main>
+
+        <section class="max-w-7xl mx-auto px-6 py-20 grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="card-custom p-8">
+                <h3 class="accent-font text-cyan-400 mb-2 text-lg uppercase">Технічний підхід</h3>
+                <p class="text-slate-400 text-sm leading-relaxed italic">Креатив у адмінів виключно для розробки та фіксу багів. Баланс понад усе.</p>
+            </div>
+            <div class="card-custom p-8">
+                <h3 class="accent-font text-cyan-400 mb-2 text-lg uppercase">Voice Chat</h3>
+                <p class="text-slate-400 text-sm leading-relaxed italic">Ми використовуємо Simple Voice Chat для реалістичного спілкування.</p>
+            </div>
+            <div class="card-custom p-8">
+                <h3 class="accent-font text-cyan-400 mb-2 text-lg uppercase">Без приватів</h3>
+                <p class="text-slate-400 text-sm leading-relaxed italic">Світ без кордонів. Ваші споруди захищені правилами та логами.</p>
+            </div>
+        </section>
+    </div>
+
+    <div id="rules" class="tab-content max-w-4xl mx-auto px-6 py-20">
+        <h2 class="accent-font text-5xl mb-12 text-center uppercase italic font-black text-white">ПРАВИЛА <span class="text-cyan-400">СЕРВЕРА</span></h2>
+        <div class="space-y-4 text-left">
+            <div class="p-6 btn-main border-l-4 border-l-cyan-600 bg-slate-950/40">
+                <h4 class="text-white font-bold mb-1 uppercase accent-font text-sm tracking-widest">1. Чіти</h4>
+                <p class="text-slate-400 text-sm italic">Заборонено будь-який софт, що дає перевагу (X-ray, Fly тощо). Бан без оскарження.</p>
+            </div>
+            <div class="p-6 btn-main border-l-4 border-l-cyan-600 bg-slate-950/40">
+                <h4 class="text-white font-bold mb-1 uppercase accent-font text-sm tracking-widest">2. Гриферство</h4>
+                <p class="text-slate-400 text-sm italic">Навмисне псування майна без причини заборонено. Логи все бачать.</p>
+            </div>
+            <div class="p-6 btn-main border-l-4 border-l-cyan-600 bg-slate-950/40">
+                <h4 class="text-white font-bold mb-1 uppercase accent-font text-sm tracking-widest">3. Creative</h4>
+                <p class="text-slate-400 text-sm italic">Адміни юзають креатив лише для будівництва спавну чи виправлення помилок сервера.</p>
+            </div>
+        </div>
+    </div><div id="donate" class="tab-content max-w-7xl mx-auto px-6 py-10">
+        <div class="text-center mb-16">
+            <h2 class="accent-font text-5xl mb-4 font-black italic uppercase text-white">ДОНАТ <span class="text-cyan-400">РАНГИ</span></h2>
+            <p class="text-slate-500 text-xs tracking-widest uppercase mb-8 italic text-white/60">Купити можна через Telegram: <a href="https://t.me/Nashik0" target="_blank" class="text-cyan-400 border-b border-cyan-600">@Nashik0</a></p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div class="btn-main p-6 flex flex-col">
+                <div class="text-gray-400 accent-font text-lg mb-1 italic font-black uppercase">🥈 Silver</div>
+                <div class="text-2xl font-black mb-4 tracking-tighter italic">19 ГРН</div>
+                <ul class="text-[11px] text-slate-500 space-y-2 uppercase font-bold tracking-tighter">
+                    <li>• Префікс [Silver]</li>
+                    <li>• +1 /sethome</li>
+                    <li>• Команда /hat</li>
+                    <li>• Пріоритет у черзі</li>
+                </ul>
+            </div>
+            <div class="btn-main p-6 flex flex-col">
+                <div class="text-yellow-500 accent-font text-lg mb-1 italic font-black uppercase">🥇 Gold</div>
+                <div class="text-2xl font-black mb-4 tracking-tighter italic">39 ГРН</div>
+                <ul class="text-[11px] text-slate-500 space-y-2 uppercase font-bold tracking-tighter text-yellow-500/80">
+                    <li>• Все з Silver</li>
+                    <li>• +2 хоми (всього 3)</li>
+                    <li>• Команда /craft</li>
+                </ul>
+            </div>
+            <div class="btn-main p-6 flex flex-col">
+                <div class="text-blue-400 accent-font text-lg mb-1 italic font-black uppercase">💎 Platinum</div>
+                <div class="text-2xl font-black mb-4 tracking-tighter italic">79 ГРН</div>
+                <ul class="text-[11px] text-slate-500 space-y-2 uppercase font-bold tracking-tighter text-blue-400/80">
+                    <li>• Все з Gold</li>
+                    <li>• +3 хоми</li>
+                    <li>• /enderchest</li>
+                </ul>
+            </div>
+            <div class="btn-main p-6 flex flex-col">
+                <div class="text-cyan-400 accent-font text-lg mb-1 italic font-black uppercase">🔷 Diamond</div>
+                <div class="text-2xl font-black mb-4 tracking-tighter italic">129 ГРН</div>
+                <ul class="text-[11px] text-slate-500 space-y-2 uppercase font-bold tracking-tighter text-cyan-400/80">
+                    <li>• Все з Platinum</li>
+                    <li>• /fly у регіоні</li>
+                    <li>• Ефекти</li>
+                </ul>
+            </div>
+            <div class="btn-main p-6 flex flex-col">
+                <div class="text-emerald-500 accent-font text-lg mb-1 italic font-black uppercase">🟢 Emerald</div>
+                <div class="text-2xl font-black mb-4 tracking-tighter italic">199 ГРН</div>
+                <ul class="text-[11px] text-slate-500 space-y-2 uppercase font-bold tracking-tighter text-emerald-500/80">
+                    <li>• Все з Diamond</li>
+                    <li>• /fly всюди</li>
+                    <li>• Збільшений бонус</li>
+                </ul>
+            </div>
+            <div class="btn-main p-6 flex flex-col">
+                <div class="text-purple-600 accent-font text-lg mb-1 italic font-black uppercase">⚫️ Obsidian</div>
+                <div class="text-2xl font-black mb-4 tracking-tighter italic">299 ГРН</div>
+                <ul class="text-[11px] text-slate-500 space-y-2 uppercase font-bold tracking-tighter text-purple-600/80">
+                    <li>• Все з Emerald</li>
+                    <li>• /nick</li>
+                    <li>• /anvil, /workbench</li>
+                </ul>
+            </div><div class="btn-main p-8 flex flex-col border-cyan-600/20 bg-cyan-950/10 lg:col-span-3 ring-1 ring-cyan-600/10">
+                <div class="flex justify-between items-center mb-6">
+                    <div class="text-cyan-400 accent-font text-4xl italic font-black uppercase">👑 MASTER</div>
+                    <div class="text-4xl font-black tracking-tighter italic text-white">399 ГРН</div>
+                </div>
+                <p class="text-[11px] text-slate-400 uppercase font-bold mb-4">Максимальний статус, уся косметика, пряма підтримка та унікальні ефекти.</p>
+                <a href="https://t.me/Nashik0" target="_blank" class="w-full py-4 bg-white text-black font-black uppercase text-center hover:bg-cyan-400 transition italic tracking-widest text-sm rounded">Придбати статус</a>
+            </div>
+        </div>
+    </div>
+
+    <footer class="py-20 text-center border-t border-white/5 mt-10">
+        <div class="accent-font text-[10px] text-slate-700 tracking-[1em] uppercase mb-4 font-bold">NEXO SMP © 2026</div>
+        <div class="flex justify-center italic text-xs text-slate-500">
+             <a href="https://discord.gg/9EBazmNJzY" target="_blank" class="hover:text-cyan-400 transition tracking-[0.3em]">DISCORD COMMUNITY</a>
+        </div>
+    </footer>
+
+    <script>
+        function showTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+            document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+            document.getElementById(tabId).classList.add('active');
+            document.getElementById('link-' + tabId).classList.add('active');
+            window.scrollTo(0, 0);
+        }
+
+        function copyIP() {
+            const ip = "nexosmp.myftp.org";
+            navigator.clipboard.writeText(ip);
+            const el = document.getElementById('ip-text');
+            const original = el.innerText;
+            el.innerText = "COPIED!";
+            el.style.color = "#22d3ee";
+            setTimeout(() => {
+                el.innerText = original;
+                el.style.color = "";
+            }, 2000);
+        }
+    </script>
+</body>
+</html>
