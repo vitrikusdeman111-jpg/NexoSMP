@@ -3,233 +3,233 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NEXO SMP | Офіційний сайт</title>
+    <title>OVERCORE | Network</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;900&family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;700;900&display=swap" rel="stylesheet">
     <style>
-        :root { 
-            --accent: #22d3ee; 
-            --accent-dark: #1e40af; 
-            --bg: #020617; 
-        }
+        :root { --accent: #991b1b; --bg: #030303; }
         body { background-color: var(--bg); color: #fff; font-family: 'Inter', sans-serif; overflow-x: hidden; }
-        .accent-font { font-family: 'Orbitron', sans-serif; }
+        .orbitron { font-family: 'Orbitron', sans-serif; }
+
+        /* Ефект зернистості (як на FunTime) */
+        .grain {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: url('https://upload.wikimedia.org/wikipedia/commons/7/76/1k_Resolution_White_Noise_Video_Frame.png');
+            opacity: 0.02; pointer-events: none; z-index: 9999;
+        }
+
+        /* Стиль вибору режиму */
+        .mode-row {
+            width: 100%; height: 180px;
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 0 8%; background: #070707;
+            border: 1px solid rgba(255,255,255,0.02);
+            transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer; position: relative; margin-bottom: 12px;
+        }
+        .mode-row:hover { border-color: var(--accent); background: #0a0000; transform: translateX(10px); }
+        .mode-row::after { content: 'ENTER'; position: absolute; right: 5%; font-family: 'Orbitron'; font-size: 10px; opacity: 0; transition: 0.3s; color: var(--accent); letter-spacing: 5px; }
+        .mode-row:hover::after { opacity: 1; right: 8%; }
         
-        .bg-animate {
-            background: 
-                radial-gradient(circle at 10% 10%, rgba(34, 211, 238, 0.06) 0%, transparent 40%),
-                radial-gradient(circle at 90% 90%, rgba(30, 64, 175, 0.08) 0%, transparent 40%),
-                linear-gradient(180deg, #020617 0%, #010413 100%);
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;
-        }
+        .tab-content { display: none; min-height: 100vh; flex-direction: column; }
+        .tab-content.active { display: flex; animation: fadeIn 0.5s ease; }
+        .sub-content { display: none; }
+        .sub-content.active { display: block; animation: slideIn 0.4s ease; }
 
-        .tab-content { display: none; }
-        .tab-content.active { display: block; animation: fadeIn 0.5s ease; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes slideIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-
-        .nav-link { cursor: pointer; transition: 0.3s; position: relative; font-size: 10px; font-weight: bold; text-transform: uppercase; letter-spacing: 0.1em; color: #94a3b8; }
-        .nav-link:hover { color: #fff; }
-        .nav-link::after { 
-            content: ''; position: absolute; bottom: -5px; left: 0; width: 0; height: 2px; 
-            background: var(--accent); transition: 0.3s; 
-        }
-        .nav-link:hover::after, .nav-link.active::after { width: 100%; }
-        .nav-link.active { color: #fff; }
-
-        .btn-main { 
-            background: rgba(255, 255, 255, 0.01); 
-            border: 1px solid rgba(255, 255, 255, 0.03); 
-            transition: 0.4s; 
-            border-radius: 4px; 
-            backdrop-filter: blur(5px);
-        }
-        .btn-main:hover { 
-            border-color: var(--accent); 
-            background: rgba(34, 211, 238, 0.02); 
-            transform: translateY(-3px); 
-        }
-        
-        .card-custom { 
-            background: rgba(255, 255, 255, 0.01); 
-            border-left: 3px solid var(--accent-dark); 
-            backdrop-filter: blur(5px);
-        }
-
-        .btn-discord {
-            background-color: #5865F2;
+        .glass-card { 
+            background: rgba(255,255,255,0.01); 
+            border: 1px solid rgba(255,255,255,0.05); 
             transition: 0.3s;
+            display: flex; flex-direction: column; justify-content: space-between;
         }
-        .btn-discord:hover {
-            background-color: #4752c4;
-            transform: scale(1.02);
+        .glass-card:hover { border-color: var(--accent); background: rgba(153, 27, 27, 0.03); }
+
+        .sticky-bar {
+            position: fixed; bottom: 25px; left: 50%; transform: translateX(-50%);
+            display: flex; gap: 10px; z-index: 1000; width: 95%; max-width: 600px;
         }
+        .float-btn {
+            flex: 1; background: #0a0a0a; border: 1px solid rgba(255,255,255,0.1);
+            padding: 14px; border-radius: 2px; font-size: 9px; font-weight: 900;
+            letter-spacing: 2px; text-transform: uppercase; transition: 0.3s; text-align: center;
+        }
+        .float-btn:hover { border-color: var(--accent); background: var(--accent); color: white; }
+
+        ::-webkit-scrollbar { width: 5px; }
+        ::-webkit-scrollbar-track { background: #030303; }
+        ::-webkit-scrollbar-thumb { background: #1a1a1a; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--accent); }
     </style>
 </head>
 <body>
 
-    <div class="bg-animate"></div>
+    <div class="grain"></div>
 
-    <nav class="p-6 flex justify-between items-center max-w-7xl mx-auto sticky top-0 bg-slate-950/60 backdrop-blur-lg z-[100] border-b border-white/5">
-        <div class="accent-font font-black text-2xl cursor-pointer tracking-tighter" onclick="showTab('home')">NEXO<span style="color: var(--accent);">_</span>SMP</div>
-        <div class="flex gap-4 md:gap-10">
-            <span class="nav-link active" id="link-home" onclick="showTab('home')">Головна</span>
-            <span class="nav-link" id="link-rules" onclick="showTab('rules')">Правила</span>
-            <span class="nav-link" id="link-donate" onclick="showTab('donate')">Донат</span>
-            <a href="https://discord.gg/9EBazmNJzY" target="_blank" class="nav-link text-cyan-400">Discord</a>
-        </div>
-    </nav><div id="home" class="tab-content active">
-        <main class="h-[75vh] flex flex-col items-center justify-center px-4 text-center">
-            <div class="mb-4 px-4 py-1 border border-cyan-600/20 rounded-full bg-cyan-950/30 text-cyan-400 text-[10px] uppercase tracking-[0.3em] accent-font">Server Online</div>
-            <h1 class="accent-font text-6xl md:text-9xl font-black mb-4 tracking-tighter uppercase italic">
-                NEXO <span style="color: var(--accent); text-shadow: 0 0 20px rgba(34, 211, 238, 0.3);">SMP</span>
-            </h1>
-            <p class="text-slate-400 max-w-lg mb-12 text-sm uppercase tracking-[0.2em] font-light italic">
-                Твоя історія, твої правила, твоє виживання.
-            </p>
-
-            <div class="flex flex-col sm:flex-row gap-6 w-full max-w-2xl">
-                <div onclick="copyIP()" class="cursor-pointer flex-1 p-5 btn-main flex flex-col items-center group border-white/5">
-                    <span class="text-[9px] text-slate-500 uppercase mb-1 tracking-widest group-hover:text-cyan-300">Натисни щоб копіювати IP</span>
-                    <span id="ip-text" class="accent-font text-xl font-bold tracking-wider uppercase text-white group-hover:text-cyan-400 transition">nexosmp.myftp.org</span>
-                </div>
-                <a href="https://discord.gg/9EBazmNJzY" target="_blank" class="flex-1 p-5 btn-discord rounded transition flex items-center justify-center accent-font text-xl uppercase font-black italic shadow-lg shadow-blue-600/10 text-white">
-                    Приєднатися
-                </a>
+    <!-- 1. ЕКРАН ВИБОРУ (ГОЛОВНА) -->
+    <div id="selection" class="tab-content active p-6 md:p-20 flex flex-col justify-center">
+        <div class="mb-12">
+            <h1 class="orbitron text-5xl md:text-8xl font-black italic tracking-tighter">OVER<span class="text-red-800">CORE</span></h1>
+            <p class="text-zinc-600 text-[10px] tracking-[1em] uppercase mt-2 font-bold italic">Network Dominion</p>
+        </div><div onclick="openMode('ANARX')" class="mode-row group">
+            <div>
+                <h2 class="orbitron text-4xl md:text-5xl font-black italic uppercase group-hover:text-red-700 transition">AnarX</h2>
+                <p class="text-zinc-600 text-[9px] uppercase tracking-[0.4em] mt-1 italic">💀 NO RULES • CHAOS • DOMINANCE</p>
             </div>
-        </main>
-
-        <section class="max-w-7xl mx-auto px-6 py-20 grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div class="card-custom p-8">
-                <h3 class="accent-font text-cyan-400 mb-2 text-lg uppercase">Технічний підхід</h3>
-                <p class="text-slate-400 text-sm leading-relaxed italic">Креатив у адмінів виключно для розробки та фіксу багів. Баланс понад усе.</p>
-            </div>
-            <div class="card-custom p-8">
-                <h3 class="accent-font text-cyan-400 mb-2 text-lg uppercase">Voice Chat</h3>
-                <p class="text-slate-400 text-sm leading-relaxed italic">Ми використовуємо Simple Voice Chat для реалістичного спілкування.</p>
-            </div>
-            <div class="card-custom p-8">
-                <h3 class="accent-font text-cyan-400 mb-2 text-lg uppercase">Без приватів</h3>
-                <p class="text-slate-400 text-sm leading-relaxed italic">Світ без кордонів. Ваші споруди захищені правилами та логами.</p>
-            </div>
-        </section>
-    </div>
-
-    <div id="rules" class="tab-content max-w-4xl mx-auto px-6 py-20">
-        <h2 class="accent-font text-5xl mb-12 text-center uppercase italic font-black text-white">ПРАВИЛА <span class="text-cyan-400">СЕРВЕРА</span></h2>
-        <div class="space-y-4 text-left">
-            <div class="p-6 btn-main border-l-4 border-l-cyan-600 bg-slate-950/40">
-                <h4 class="text-white font-bold mb-1 uppercase accent-font text-sm tracking-widest">1. Чіти</h4>
-                <p class="text-slate-400 text-sm italic">Заборонено будь-який софт, що дає перевагу (X-ray, Fly тощо). Бан без оскарження.</p>
-            </div>
-            <div class="p-6 btn-main border-l-4 border-l-cyan-600 bg-slate-950/40">
-                <h4 class="text-white font-bold mb-1 uppercase accent-font text-sm tracking-widest">2. Гриферство</h4>
-                <p class="text-slate-400 text-sm italic">Навмисне псування майна без причини заборонено. Логи все бачать.</p>
-            </div>
-            <div class="p-6 btn-main border-l-4 border-l-cyan-600 bg-slate-950/40">
-                <h4 class="text-white font-bold mb-1 uppercase accent-font text-sm tracking-widest">3. Creative</h4>
-                <p class="text-slate-400 text-sm italic">Адміни юзають креатив лише для будівництва спавну чи виправлення помилок сервера.</p>
-            </div>
-        </div>
-    </div><div id="donate" class="tab-content max-w-7xl mx-auto px-6 py-10">
-        <div class="text-center mb-16">
-            <h2 class="accent-font text-5xl mb-4 font-black italic uppercase text-white">ДОНАТ <span class="text-cyan-400">РАНГИ</span></h2>
-            <p class="text-slate-500 text-xs tracking-widest uppercase mb-8 italic text-white/60">Купити можна через Telegram: <a href="https://t.me/Nashik0" target="_blank" class="text-cyan-400 border-b border-cyan-600">@Nashik0</a></p>
+            <div class="orbitron text-6xl font-black opacity-[0.03]">01</div>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <div class="btn-main p-6 flex flex-col">
-                <div class="text-gray-400 accent-font text-lg mb-1 italic font-black uppercase">🥈 Silver</div>
-                <div class="text-2xl font-black mb-4 tracking-tighter italic">19 ГРН</div>
-                <ul class="text-[11px] text-slate-500 space-y-2 uppercase font-bold tracking-tighter">
-                    <li>• Префікс [Silver]</li>
-                    <li>• +1 /sethome</li>
-                    <li>• Команда /hat</li>
-                    <li>• Пріоритет у черзі</li>
-                </ul>
+        <div onclick="openMode('NEXOSMP')" class="mode-row group">
+            <div>
+                <h2 class="orbitron text-4xl md:text-5xl font-black italic uppercase text-red-800 group-hover:text-white transition">Nexo SMP</h2>
+                <p class="text-zinc-600 text-[9px] uppercase tracking-[0.4em] mt-1 italic">🎭 ROLEPLAY • VOICE • COMMUNITY</p>
             </div>
-            <div class="btn-main p-6 flex flex-col">
-                <div class="text-yellow-500 accent-font text-lg mb-1 italic font-black uppercase">🥇 Gold</div>
-                <div class="text-2xl font-black mb-4 tracking-tighter italic">39 ГРН</div>
-                <ul class="text-[11px] text-slate-500 space-y-2 uppercase font-bold tracking-tighter text-yellow-500/80">
-                    <li>• Все з Silver</li>
-                    <li>• +2 хоми (всього 3)</li>
-                    <li>• Команда /craft</li>
-                </ul>
-            </div>
-            <div class="btn-main p-6 flex flex-col">
-                <div class="text-blue-400 accent-font text-lg mb-1 italic font-black uppercase">💎 Platinum</div>
-                <div class="text-2xl font-black mb-4 tracking-tighter italic">79 ГРН</div>
-                <ul class="text-[11px] text-slate-500 space-y-2 uppercase font-bold tracking-tighter text-blue-400/80">
-                    <li>• Все з Gold</li>
-                    <li>• +3 хоми</li>
-                    <li>• /enderchest</li>
-                </ul>
-            </div>
-            <div class="btn-main p-6 flex flex-col">
-                <div class="text-cyan-400 accent-font text-lg mb-1 italic font-black uppercase">🔷 Diamond</div>
-                <div class="text-2xl font-black mb-4 tracking-tighter italic">129 ГРН</div>
-                <ul class="text-[11px] text-slate-500 space-y-2 uppercase font-bold tracking-tighter text-cyan-400/80">
-                    <li>• Все з Platinum</li>
-                    <li>• /fly у регіоні</li>
-                    <li>• Ефекти</li>
-                </ul>
-            </div>
-            <div class="btn-main p-6 flex flex-col">
-                <div class="text-emerald-500 accent-font text-lg mb-1 italic font-black uppercase">🟢 Emerald</div>
-                <div class="text-2xl font-black mb-4 tracking-tighter italic">199 ГРН</div>
-                <ul class="text-[11px] text-slate-500 space-y-2 uppercase font-bold tracking-tighter text-emerald-500/80">
-                    <li>• Все з Diamond</li>
-                    <li>• /fly всюди</li>
-                    <li>• Збільшений бонус</li>
-                </ul>
-            </div>
-            <div class="btn-main p-6 flex flex-col">
-                <div class="text-purple-600 accent-font text-lg mb-1 italic font-black uppercase">⚫️ Obsidian</div>
-                <div class="text-2xl font-black mb-4 tracking-tighter italic">299 ГРН</div>
-                <ul class="text-[11px] text-slate-500 space-y-2 uppercase font-bold tracking-tighter text-purple-600/80">
-                    <li>• Все з Emerald</li>
-                    <li>• /nick</li>
-                    <li>• /anvil, /workbench</li>
-                </ul>
-            </div><div class="btn-main p-8 flex flex-col border-cyan-600/20 bg-cyan-950/10 lg:col-span-3 ring-1 ring-cyan-600/10">
-                <div class="flex justify-between items-center mb-6">
-                    <div class="text-cyan-400 accent-font text-4xl italic font-black uppercase">👑 MASTER</div>
-                    <div class="text-4xl font-black tracking-tighter italic text-white">399 ГРН</div>
-                </div>
-                <p class="text-[11px] text-slate-400 uppercase font-bold mb-4">Максимальний статус, уся косметика, пряма підтримка та унікальні ефекти.</p>
-                <a href="https://t.me/Nashik0" target="_blank" class="w-full py-4 bg-white text-black font-black uppercase text-center hover:bg-cyan-400 transition italic tracking-widest text-sm rounded">Придбати статус</a>
-            </div>
+            <div class="orbitron text-6xl font-black opacity-[0.03]">02</div>
         </div>
     </div>
 
-    <footer class="py-20 text-center border-t border-white/5 mt-10">
-        <div class="accent-font text-[10px] text-slate-700 tracking-[1em] uppercase mb-4 font-bold">NEXO SMP © 2026</div>
-        <div class="flex justify-center italic text-xs text-slate-500">
-             <a href="https://discord.gg/9EBazmNJzY" target="_blank" class="hover:text-cyan-400 transition tracking-[0.3em]">DISCORD COMMUNITY</a>
-        </div>
-    </footer>
+    <!-- 2. ВНУТРІШНІЙ ІНТЕРФЕЙС (ПІСЛЯ ВИБОРУ) -->
+    <div id="main-ui" class="tab-content">
+        <nav class="p-6 flex justify-between items-center border-b border-white/5 sticky top-0 bg-black/95 z-[100]">
+            <!-- Логотип повертає на головну -->
+            <div class="orbitron text-xl font-black italic cursor-pointer group" onclick="goBack()">
+                OVER<span class="text-red-800 group-hover:text-white transition">CORE</span>
+            </div>
+            <div class="flex gap-6">
+                <span class="cursor-pointer text-[10px] font-black uppercase tracking-widest hover:text-red-800 transition" onclick="switchSub('home')">Інфо</span>
+                <span class="cursor-pointer text-[10px] font-black uppercase tracking-widest hover:text-red-800 transition" onclick="switchSub('rules')">Правила</span>
+                <span class="cursor-pointer text-[10px] font-black uppercase tracking-widest hover:text-red-800 transition" onclick="switchSub('donate')">Донат</span>
+            </div>
+        </nav>
 
-    <script>
-        function showTab(tabId) {
-            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
-            document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
-            document.getElementById(tabId).classList.add('active');
-            document.getElementById('link-' + tabId).classList.add('active');
-            window.scrollTo(0, 0);
+        <!-- Суб-сторінки -->
+        <div id="sub-home" class="sub-content active py-32 text-center px-4">
+            <h2 id="current-mode-title" class="orbitron text-6xl md:text-[9rem] font-black italic uppercase leading-none">SERVER</h2>
+            <p id="mode-desc" class="text-red-800 orbitron tracking-[1em] text-[10px] mt-8 opacity-50 uppercase font-bold italic">System Online</p>
+        </div>
+
+        <div id="sub-rules" class="sub-content py-20 px-6 max-w-4xl mx-auto">
+            <h2 class="orbitron text-3xl font-black italic uppercase mb-12 border-l-4 border-red-800 pl-4">Кодекс_</h2>
+            <div id="rules-container" class="grid gap-6"></div>
+        </div>
+
+        <div id="sub-donate" class="sub-content py-20 px-6 max-w-7xl mx-auto">
+            <h2 class="orbitron text-3xl font-black italic uppercase mb-16 text-center">Пільги та Ранги</h2>
+            <div id="donate-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4"></div>
+        </div>
+    </div>
+
+    <!-- 3. ПАНЕЛЬ IP ТА DISCORD -->
+    <div class="sticky-bar">
+        <button onclick="copyIP()" class="float-btn orbitron group">
+            <span id="ip-text" class="text-red-800 tracking-widest">CLICK TO COPY IP</span>
+        </button>
+        <a href="https://discord.gg/9EBazmNJzY" target="_blank" class="float-btn orbitron bg-red-800 border-red-800 text-white hover:bg-white hover:text-black">
+            Discord
+        </a>
+    </div><script>
+        const data = {
+            'ANARX': {
+                ip: 'overcore.myftp.org',
+                desc: 'Повна анархія. Виживає найсильніший.',
+                rules: [
+                    { category: '💀 ГРИФ ТА PvP', list: ['Ламати бази та красти ресурси — дозволено.', 'Засідки та пастки — частина гри.', 'PvP без обмежень.'] },
+                    { category: '🚫 СУВОРО ЗАБОРОНЕНО', list: ['Чіти, хаки, X-Ray.', 'Дюпи (баги на предмети).', 'Атаки на сервер (DoS/DDoS).', 'Продаж за реальні гроші повз адміністрацію.'] },
+                    { category: '⚙️ ВАЖЛИВО', list: ['Креатив видається ТИМЧАСОВО.', 'Зловживання креативом = зняття.', 'Донат не повертається.', 'Рішення адміна — остаточне.'] }
+                ],
+                donate: [
+                    { name: 'VIP', price: '29 UAH', features: ['Політ (/fly)', '2 точки дому', 'Аура частинок', 'VIP кейси'] },
+                    { name: 'PRO', price: '79 UAH', features: ['Політ без обмежень', 'Ремонт (/repair)', '5 точок дому', 'Покращені кейси'] },
+                    { name: 'GOD', price: '149 UAH', features: ['Режим бога (/god)', 'Ремонт без КД', '10 точок дому', 'Золота аура'] },
+                    { name: 'CREATIVE', price: '19-99 UAH', features: ['Creative Mode', 'Нищення баз', '15хв / 1год / 1день'] }
+                ]
+            },
+            'NEXOSMP': {
+                ip: 'nexosmp.myftp.org',
+                desc: 'Приватне ком’юніті та ванільне виживання.',
+                rules: [
+                    { category: '📜 ОСНОВНІ ПРАВИЛА', list: ['Поважай кожного гравця.', 'Гриферство = БАН.', 'Не кради ресурсів.', 'PvP тільки за згодою.', 'Чити = PERMANENT BAN.'] },
+                    { category: '⚙️ ІГРОВИЙ СВІТ', list: ['Не будуй біля спавну (100+ блоків).', 'Не руйнуй природу просто так.', 'Чужі тварини — недоторканні.', 'TNT та вогонь — обережно.'] },
+                    { category: '💬 ЧАТ ТА ІНШЕ', list: ['Без спаму та реклами.', 'Мінімум нецензурщини.', 'Дотримуйся атмосфери РП.'] }
+                ],
+                donate: [
+                    { name: 'Silver', price: '19 UAH', features: ['Префікс [Silver]', '+1 /sethome', '/hat', 'Пріоритет'] },
+                    { name: 'Gold', price: '39 UAH', features: ['Все з Silver', 'Префікс [Gold]', '3 хоми', '/craft'] },
+                    { name: 'Platinum', price: '79 UAH', features: ['Все з Gold', 'Префікс [Platinum]', '+3 хоми', '/enderchest'] },
+                    { name: 'Diamond', price: '129 UAH', features: ['Все Platinum', 'Префікс [Diamond]', '+5 хомів', '/fly у регіоні'] },
+                    { name: 'Emerald', price: '199 UAH', features: ['Все Diamond', 'Префікс [Emerald]', '/fly всюди', 'Бонус++'] },
+                    { name: 'Obsidian', price: '299 UAH', features: ['Все Emerald', 'Префікс [Obsidian]', '/nick', '/anvil'] },
+                    { name: 'Master', price: '399 UAH', features: ['МАКСИМУМ', 'Уся косметика', 'Унікальний ефект', 'Все з Obsidian'] }
+                ]
+            }
+        };
+
+        let currentIP = "";
+
+        // Функція входу в режим
+        function openMode(mode) {
+            document.getElementById('selection').classList.remove('active');
+            document.getElementById('main-ui').classList.add('active');
+            document.getElementById('current-mode-title').innerText = mode;
+            document.getElementById('mode-desc').innerText = data[mode].desc;
+            
+            currentIP = data[mode].ip;
+            document.getElementById('ip-text').innerText = currentIP.toUpperCase();// Генерація правил
+            const rc = document.getElementById('rules-container');
+            rc.innerHTML = data[mode].rules.map(cat => `
+                <div>
+                    <h4 class="orbitron text-red-800 text-[10px] font-black mb-4 tracking-[0.3em] uppercase">${cat.category}</h4>
+                    <div class="grid gap-2">
+                        ${cat.list.map(r => <div class="glass-card p-4 text-[10px] font-bold uppercase tracking-widest text-zinc-400 border-l-2 border-l-red-800">${r}</div>).join('')}
+                    </div>
+                </div>
+            `).join('');
+
+            // Генерація донату
+            const dc = document.getElementById('donate-container');
+            dc.innerHTML = data[mode].donate.map(d => `
+                <div class="glass-card p-8 min-h-[350px]">
+                    <div>
+                        <h3 class="orbitron text-xl font-black mb-1 italic">${d.name}</h3>
+                        <div class="text-red-800 font-black text-lg mb-6 tracking-tighter">${d.price}</div>
+                        <ul class="text-[9px] text-zinc-500 tracking-tighter uppercase space-y-2 mb-8">
+                            ${d.features.map(f => <li>• ${f}</li>).join('')}
+                        </ul>
+                    </div>
+                    <a href="https://t.me/Nashik0" target="_blank" class="w-full border border-white/5 py-4 text-[9px] orbitron font-black hover:bg-red-800 hover:border-red-800 transition uppercase text-center block">Придбати</a>
+                </div>
+            `).join('');
+            
+            switchSub('home');
+        }
+
+        // Повернення на головну
+        function goBack() {
+            document.getElementById('main-ui').classList.remove('active');
+            document.getElementById('selection').classList.add('active');
+            currentIP = "";
+            document.getElementById('ip-text').innerText = "CLICK TO COPY IP";
+        }
+
+        function switchSub(id) {
+            document.querySelectorAll('.sub-content').forEach(s => s.classList.remove('active'));
+            document.getElementById('sub-' + id).classList.add('active');
+            window.scrollTo(0,0);
         }
 
         function copyIP() {
-            const ip = "nexosmp.myftp.org";
-            navigator.clipboard.writeText(ip);
+            if(!currentIP) return;
+            navigator.clipboard.writeText(currentIP);
             const el = document.getElementById('ip-text');
-            const original = el.innerText;
+            const originalText = currentIP.toUpperCase();
             el.innerText = "COPIED!";
-            el.style.color = "#22d3ee";
-            setTimeout(() => {
-                el.innerText = original;
+            el.style.color = "white";
+            setTimeout(() => { 
+                el.innerText = originalText; 
                 el.style.color = "";
-            }, 2000);
+            }, 1500);
         }
     </script>
 </body>
