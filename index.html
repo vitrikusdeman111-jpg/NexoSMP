@@ -73,7 +73,9 @@
         <div class="mb-12">
             <h1 class="orbitron text-5xl md:text-8xl font-black italic tracking-tighter">OVER<span class="text-red-800">CORE</span></h1>
             <p class="text-zinc-600 text-[10px] tracking-[1em] uppercase mt-2 font-bold italic">Network Dominion</p>
-        </div><div onclick="openMode('ANARX')" class="mode-row group">
+        </div>
+
+        <div onclick="openMode('ANARX')" class="mode-row group">
             <div>
                 <h2 class="orbitron text-4xl md:text-5xl font-black italic uppercase group-hover:text-red-700 transition">AnarX</h2>
                 <p class="text-zinc-600 text-[9px] uppercase tracking-[0.4em] mt-1 italic">💀 NO RULES • CHAOS • DOMINANCE</p>
@@ -129,7 +131,9 @@
         <a href="https://discord.gg/9EBazmNJzY" target="_blank" class="float-btn orbitron bg-red-800 border-red-800 text-white hover:bg-white hover:text-black">
             Discord
         </a>
-    </div><script>
+    </div>
+
+    <script>
         const data = {
             'ANARX': {
                 ip: 'overcore.myftp.org',
@@ -176,13 +180,15 @@
             document.getElementById('mode-desc').innerText = data[mode].desc;
             
             currentIP = data[mode].ip;
-            document.getElementById('ip-text').innerText = currentIP.toUpperCase();// Генерація правил
+            document.getElementById('ip-text').innerText = currentIP.toUpperCase();
+
+            // Генерація правил
             const rc = document.getElementById('rules-container');
             rc.innerHTML = data[mode].rules.map(cat => `
                 <div>
                     <h4 class="orbitron text-red-800 text-[10px] font-black mb-4 tracking-[0.3em] uppercase">${cat.category}</h4>
                     <div class="grid gap-2">
-                        ${cat.list.map(r => <div class="glass-card p-4 text-[10px] font-bold uppercase tracking-widest text-zinc-400 border-l-2 border-l-red-800">${r}</div>).join('')}
+                        ${cat.list.map(r => `<div class="glass-card p-4 text-[10px] font-bold uppercase tracking-widest text-zinc-400 border-l-2 border-l-red-800">${r}</div>`).join('')}
                     </div>
                 </div>
             `).join('');
@@ -195,7 +201,7 @@
                         <h3 class="orbitron text-xl font-black mb-1 italic">${d.name}</h3>
                         <div class="text-red-800 font-black text-lg mb-6 tracking-tighter">${d.price}</div>
                         <ul class="text-[9px] text-zinc-500 tracking-tighter uppercase space-y-2 mb-8">
-                            ${d.features.map(f => <li>• ${f}</li>).join('')}
+                            ${d.features.map(f => `<li>• ${f}</li>`).join('')}
                         </ul>
                     </div>
                     <a href="https://t.me/Nashik0" target="_blank" class="w-full border border-white/5 py-4 text-[9px] orbitron font-black hover:bg-red-800 hover:border-red-800 transition uppercase text-center block">Придбати</a>
